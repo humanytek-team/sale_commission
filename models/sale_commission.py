@@ -1,0 +1,155 @@
+# -*- coding: utf-8 -*-
+###############################################################################
+#
+#    Odoo, Open Source Management Solution
+#    Copyright (C) 2017 Humanytek (<www.humanytek.com>).
+#    Rubén Bravo <rubenred18@gmail.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+###############################################################################
+
+from odoo import api, fields, models
+import datetime
+import logging
+_logger = logging.getLogger(__name__)
+
+
+class SaleCommission(models.TransientModel):
+    _name = "sale.commission"
+
+    @api.multi
+    def calculate(self):
+        AccountInvoice = self.env['account.invoice']
+        SaleCommissionDetail = self.env['sale.commission.detail']
+        SaleCommissionBrand = self.env['sale.commission.brand']
+        SaleCommissionSetting = self.env['sale.commission.setting']
+
+        sale_commission_setting = SaleCommissionSetting.search([], limit=1)
+        commi = 0
+        sett_day = 0
+        if sale_commission_setting:
+            commi = sale_commission_setting.commission
+            sett_day = sale_commission_setting.day
+        account_invoices = AccountInvoice.search([
+                                ('user_id', '=', self.user_id.id),
+                                ('date_invoice', '>=', self.date_start),
+                                ('date_invoice', '<=', self.date_end),
+                                ('payment_ids', '!=', False)])
+        SaleCommissionDetail.search([]).unlink()
+
+        for account_invoice in account_invoices:
+            inte = 0
+            if account_invoice.invoice_line_ids[0].product_id.product_brand_id:
+                sale_commission_brand = SaleCommissionBrand.search([
+                    ('user_id', '=', account_invoice.user_id.id),
+                    ('brand_id', '=', account_invoice.invoice_line_ids[0].product_id.product_brand_id.id)],
+                    limit=1)
+                if sale_commission_brand:
+                    inte = sale_commission_brand[0].commission
+            for payment in account_invoice.payment_ids:
+                _logger.info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                _logger.info(datetime.datetime.strptime(payment.payment_date, "%Y-%m-%d"))
+                day_difference = datetime.datetime.strptime(payment.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_invoice, "%Y-%m-%d")
+                _logger.info(day_difference.days)
+                day = 0
+                if day_difference.days > sett_day:
+                    day = int(day_difference.days)
+                #commi = 0
+                #if sale_commission_setting:
+                    #commi = sale_commission_setting.commission
+                penalization = ((payment.amount * commi) / 30) * day
+                _logger.info('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq')
+                _logger.info(penalization)
+                before_penalization = payment.amount * inte
+                commission = before_penalization - penalization
+                SaleCommissionDetail.create({
+                    'sale_commission_id': self.id,
+                    'account_invoice_id': account_invoice.id,
+                    'account_payment_id': payment.id,
+                    'day_difference': day_difference.days,
+                    'day_int': day,
+                    'penalization': penalization,
+                    'commission_brand': inte,
+                    'before_penalization': before_penalization,
+                    'commission': commission
+                    })
+
+        return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'sale.commission',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'res_id': self.id,
+                'views': [(False, 'form')],
+                'target': 'new',
+                }
+
+    user_id = fields.Many2one('res.users', 'Salesman', required=True)
+    date_start = fields.Datetime('Start Date',
+                                    required=True)
+    date_end = fields.Datetime('End Date',
+                                    required=True)
+    sale_commission_detail_ids = fields.One2many('sale.commission.detail',
+                            'sale_commission_id',
+                            'Detail')
+
+
+class SaleCommissionDetail(models.TransientModel):
+    _name = "sale.commission.detail"
+
+    sale_commission_id = fields.Many2one('sale.commission', 'Commission')
+    account_invoice_id = fields.Many2one('account.invoice', 'Invoice',
+                                        readonly=True)
+    account_invoice_number = fields.Char(related='account_invoice_id.number',
+                            string='Number', readonly=True, store=False)
+    account_invoice_date = fields.Date(
+                            related='account_invoice_id.date_invoice',
+                            string='Date', readonly=True, store=False)
+    partner_id = fields.Many2one(related='account_invoice_id.partner_id',
+                            string='Customer',
+                            readonly=True, store=False)
+    currency_id = fields.Many2one(related='account_invoice_id.currency_id',
+                            string='Currency',
+                            readonly=True, store=False)
+    account_payment_id = fields.Many2one('account.payment', 'Payment',
+                                        readonly=True)
+    account_payment_date = fields.Date(
+                            related='account_payment_id.payment_date',
+                            string='Date', readonly=True, store=False)
+    account_payment_amount = fields.Monetary(
+                            related='account_payment_id.amount',
+                            string='Amount', readonly=True, store=False,
+                            widget="Float")
+    day_difference = fields.Integer('Difference Days')
+    day_int = fields.Integer('Int. Days')
+    penalization = fields.Float('Penalization Amount')
+    before_penalization = fields.Float('Before Penalization Amount')
+    commission = fields.Float('Commission')
+    commission_brand = fields.Float('Commission Brand')
+
+
+class SaleCommissionBrand(models.Model):
+    _name = "sale.commission.brand"
+
+    user_id = fields.Many2one('res.users', 'Salesman', required=True)
+    brand_id = fields.Many2one('product.brand', 'Brand', required=True)
+    commission = fields.Float('Commission (%)', required=True)
+
+
+class SaleCommissionSetting(models.Model):
+    _name = "sale.commission.setting"
+
+    day = fields.Integer('Days', required=True)
+    commission = fields.Float('Commission (%)', (2, 4), required=True)

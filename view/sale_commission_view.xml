@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_commission_view" model="ir.ui.view">
+        <field name="name">sale.commission.view</field>
+        <field name="model">sale.commission</field>
+        <field name="arch" type="xml">
+            <form string="Commission">
+                <header>
+                    <button
+                        name="calculate"
+                        string="Calculate"
+                        type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id" />
+                            <!--<field name="location_id" />
+                            <field name="stock_start" />
+                            <field name="stock_end" />-->
+                        </group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_end" />
+                        </group>
+                    </group>
+                    <field name="sale_commission_detail_ids" mode="tree">
+                        <tree string="Detail" >
+                            <field name="account_invoice_number" />
+                            <field name="partner_id" />
+                            <field name="currency_id" invisible="1"/>
+                            <field name="account_invoice_date" />
+                            <field name="account_payment_date" />
+                            <field name="account_payment_amount" options="{'currency_field': 'currency_id'}"/>
+                            <field name="day_difference" readonly="1"/>
+                            <field name="day_int" readonly="1"/>
+                            <field name="penalization" readonly="1"/>
+                            <field name="commission_brand" readonly="1"/>
+                            <field name="before_penalization" readonly="1"/>
+                            <field name="commission" readonly="1"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_sale_commission">
+        <field name="name">Commission</field>
+        <field name="res_model">sale.commission</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_sale_commission" name="Commission" parent="sales_team.menu_sales" action="action_sale_commission"/>
+
+    <record id="sale_commission_detail_view" model="ir.ui.view">
+        <field name="name">sale.commission.detail.view</field>
+        <field name="model">sale.commission.detail</field>
+        <field name="arch" type="xml">
+            <form string="Commission Detail">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="account_invoice_number" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="account_invoice_date" readonly="1"/>
+                            <field name="account_payment_date" readonly="1"/>
+                            <field name="account_payment_amount" readonly="1" options="{'currency_field': 'currency_id'}"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="sale_commission_brand_view" model="ir.ui.view">
+        <field name="name">sale.commission.brand.view</field>
+        <field name="model">sale.commission.brand</field>
+        <field name="arch" type="xml">
+            <form string="Commission">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id" />
+                        </group>
+                        <group>
+                            <field name="brand_id" />
+                            <field name="commission" />
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_commission_brand_tree" model="ir.ui.view">
+        <field name="name">sale.commission.brand.tree</field>
+        <field name="model">sale.commission.brand</field>
+        <field name="arch" type="xml">
+            <tree string="Commission">
+                <field name="user_id"/>
+                <field name="brand_id"/>
+                <field name="commission"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_sale_commission_brand">
+        <field name="name">Commission Salesman</field>
+        <field name="res_model">sale.commission.brand</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sale_commission_brand" name="Commission Salesman" parent="sale.menu_sales_config" action="action_sale_commission_brand"/>
+
+
+    <record id="sale_commission_setting_view" model="ir.ui.view">
+        <field name="name">sale.commission.setting.view</field>
+        <field name="model">sale.commission.setting</field>
+        <field name="arch" type="xml">
+            <form string="Commission Setting">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="day" />
+                        </group>
+                        <group>
+                            <field name="commission" />
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_commission_setting_tree" model="ir.ui.view">
+        <field name="name">sale.commission.setting.tree</field>
+        <field name="model">sale.commission.setting</field>
+        <field name="arch" type="xml">
+            <tree string="Commission Setting">
+                <field name="day"/>
+                <field name="commission"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_sale_commission_setting">
+        <field name="name">Commission Setting</field>
+        <field name="res_model">sale.commission.setting</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sale_commission_setting" name="Commission setting" parent="sale.menu_sales_config" action="action_sale_commission_setting"/>
+
+</odoo>
+
