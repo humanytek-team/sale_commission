@@ -25,7 +25,7 @@
                             <field name="date_end" />
                         </group>
                     </group>
-                    <field name="sale_commission_detail_ids" mode="tree">
+                    <field name="sale_commission_detail_ids" mode="tree" limit="10">
                         <tree string="Detail" >
                             <field name="account_invoice_number" />
                             <field name="partner_id" />
@@ -41,6 +41,11 @@
                             <field name="commission" readonly="1"/>
                         </tree>
                     </field>
+                    <group>
+                        <field name="commission_tax" />
+                        <field name="commission" />
+                    </group>
+
                 </sheet>
             </form>
         </field>

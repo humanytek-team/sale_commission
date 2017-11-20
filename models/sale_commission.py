@@ -40,7 +40,7 @@ class SaleCommission(models.TransientModel):
         commi = 0
         sett_day = 0
         if sale_commission_setting:
-            commi = sale_commission_setting.commission
+            commi = sale_commission_setting.commission / 100
             sett_day = sale_commission_setting.day
         account_invoices = AccountInvoice.search([
                                 ('user_id', '=', self.user_id.id),
@@ -57,21 +57,13 @@ class SaleCommission(models.TransientModel):
                     ('brand_id', '=', account_invoice.invoice_line_ids[0].product_id.product_brand_id.id)],
                     limit=1)
                 if sale_commission_brand:
-                    inte = sale_commission_brand[0].commission
+                    inte = sale_commission_brand[0].commission / 100
             for payment in account_invoice.payment_ids:
-                _logger.info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-                _logger.info(datetime.datetime.strptime(payment.payment_date, "%Y-%m-%d"))
                 day_difference = datetime.datetime.strptime(payment.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_invoice, "%Y-%m-%d")
-                _logger.info(day_difference.days)
                 day = 0
                 if day_difference.days > sett_day:
                     day = int(day_difference.days)
-                #commi = 0
-                #if sale_commission_setting:
-                    #commi = sale_commission_setting.commission
                 penalization = ((payment.amount * commi) / 30) * day
-                _logger.info('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq')
-                _logger.info(penalization)
                 before_penalization = payment.amount * inte
                 commission = before_penalization - penalization
                 SaleCommissionDetail.create({
@@ -104,6 +96,22 @@ class SaleCommission(models.TransientModel):
     sale_commission_detail_ids = fields.One2many('sale.commission.detail',
                             'sale_commission_id',
                             'Detail')
+    commission_tax = fields.Float('Commission with tax',
+                                compute='_compute_commission',
+                                readonly=True)
+    commission = fields.Float('Commission',
+                                compute='_compute_commission',
+                                readonly=True)
+
+    @api.multi
+    def _compute_commission(self):
+        self.commission_tax = sum([sale_commission_detail.commission
+                                for sale_commission_detail in
+                                self.sale_commission_detail_ids
+                                #if product_compromise.state == 'assigned'
+                                ])
+        self.commission = (self.commission_tax -
+                            (self.commission_tax * 0.16))
 
 
 class SaleCommissionDetail(models.TransientModel):
@@ -130,14 +138,13 @@ class SaleCommissionDetail(models.TransientModel):
                             string='Date', readonly=True, store=False)
     account_payment_amount = fields.Monetary(
                             related='account_payment_id.amount',
-                            string='Amount', readonly=True, store=False,
-                            widget="Float")
+                            string='Amount', readonly=True, store=False,)
     day_difference = fields.Integer('Difference Days')
     day_int = fields.Integer('Int. Days')
     penalization = fields.Float('Penalization Amount')
     before_penalization = fields.Float('Before Penalization Amount')
     commission = fields.Float('Commission')
-    commission_brand = fields.Float('Commission Brand')
+    commission_brand = fields.Float('Commission Brand', (2, 4))
 
 
 class SaleCommissionBrand(models.Model):
