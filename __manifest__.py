@@ -33,9 +33,9 @@
     'depends': ['sale'],
     'data': [
         'view/sale_commission_view.xml',
-        'data/sale_commission_report_data.xml',
         'report/sale_commission_report.xml',
         'report/sale_commission_report_templates.xml',
+        'data/sale_commission_report_data.xml',
     ],
     'demo': [
     ],
