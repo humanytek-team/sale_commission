@@ -104,6 +104,13 @@ class SaleCommission(models.TransientModel):
                                 readonly=True)
 
     @api.multi
+    def print_commission(self):
+        Report = self.env['report']
+        return Report.get_action(
+            self,
+            'sale_commission.sale_commission_report2')
+
+    @api.multi
     def _compute_commission(self):
         self.commission_tax = sum([sale_commission_detail.commission
                                 for sale_commission_detail in
@@ -124,7 +131,7 @@ class SaleCommissionDetail(models.TransientModel):
                             string='Number', readonly=True, store=False)
     account_invoice_date = fields.Date(
                             related='account_invoice_id.date_invoice',
-                            string='Date', readonly=True, store=False)
+                            string='Invoice Date', readonly=True, store=False)
     partner_id = fields.Many2one(related='account_invoice_id.partner_id',
                             string='Customer',
                             readonly=True, store=False)
@@ -135,7 +142,7 @@ class SaleCommissionDetail(models.TransientModel):
                                         readonly=True)
     account_payment_date = fields.Date(
                             related='account_payment_id.payment_date',
-                            string='Date', readonly=True, store=False)
+                            string='Payment Date', readonly=True, store=False)
     account_payment_amount = fields.Monetary(
                             related='account_payment_id.amount',
                             string='Amount', readonly=True, store=False,)

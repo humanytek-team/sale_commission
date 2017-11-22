@@ -11,6 +11,10 @@
                         name="calculate"
                         string="Calculate"
                         type="object"/>
+                    <button
+                        name="print_commission"
+                        string="Print"
+                        type="object"/>
                 </header>
                 <sheet>
                     <group>
@@ -52,13 +56,13 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_sale_commission">
-        <field name="name">Commission</field>
+        <field name="name">Commission Calculation</field>
         <field name="res_model">sale.commission</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
 
-    <menuitem id="menu_sale_commission" name="Commission" parent="sales_team.menu_sales" action="action_sale_commission"/>
+    <menuitem id="menu_sale_commission" name="Commission Calculation" parent="sales_team.menu_sales" action="action_sale_commission"/>
 
     <record id="sale_commission_detail_view" model="ir.ui.view">
         <field name="name">sale.commission.detail.view</field>
