@@ -58,18 +58,39 @@ class SaleCommission(models.TransientModel):
                     limit=1)
                 if sale_commission_brand:
                     inte = sale_commission_brand[0].commission / 100
-            for payment in account_invoice.payment_ids:
-                day_difference = datetime.datetime.strptime(payment.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_invoice, "%Y-%m-%d")
+            #for payment in account_invoice.payment_ids:
+                #amount = 0
+            for payment in account_invoice.payment_move_line_ids:
+
+
+                payment_currency_id = False
+                amount = sum([p.amount for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
+                amount_currency = sum([p.amount_currency for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
+                if payment.matched_debit_ids:
+                    payment_currency_id = all([p.currency_id == payment.matched_debit_ids[0].currency_id for p in payment.matched_debit_ids]) and payment.matched_debit_ids[0].currency_id or False
+                if payment_currency_id and payment_currency_id == account_invoice.currency_id:
+                    amount_to_show = amount_currency
+                else:
+                    amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
+
+
+
+                amount = amount_to_show
+                _logger.info('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ')
+                _logger.info(amount_to_show)
+                _logger.info(inte)
+                day_difference = datetime.datetime.strptime(payment.payment_id.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_invoice, "%Y-%m-%d")
                 day = 0
                 if day_difference.days > sett_day:
                     day = int(day_difference.days)
-                penalization = ((payment.amount * commi) / 30) * day
-                before_penalization = payment.amount * inte
+                penalization = ((amount * commi) / 30) * day
+                before_penalization = amount * inte
                 commission = before_penalization - penalization
                 SaleCommissionDetail.create({
+                    'account_payment_amount': amount,
                     'sale_commission_id': self.id,
                     'account_invoice_id': account_invoice.id,
-                    'account_payment_id': payment.id,
+                    'account_payment_id': payment.payment_id.id,
                     'day_difference': day_difference.days,
                     'day_int': day,
                     'penalization': penalization,
@@ -144,8 +165,7 @@ class SaleCommissionDetail(models.TransientModel):
                             related='account_payment_id.payment_date',
                             string='Payment Date', readonly=True, store=False)
     account_payment_amount = fields.Monetary(
-                            related='account_payment_id.amount',
-                            string='Amount', readonly=True, store=False,)
+                            string='Amount', readonly=True)
     day_difference = fields.Integer('Difference Days')
     day_int = fields.Integer('Int. Days')
     penalization = fields.Float('Penalization Amount')
