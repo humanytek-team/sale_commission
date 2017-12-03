@@ -72,32 +72,27 @@ class SaleCommission(models.TransientModel):
                     amount_to_show = amount_currency
                 else:
                     amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
-
-
-
                 amount = amount_to_show
-                _logger.info('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ')
-                _logger.info(amount_to_show)
-                _logger.info(inte)
-                day_difference = datetime.datetime.strptime(payment.payment_id.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_invoice, "%Y-%m-%d")
-                day = 0
-                if day_difference.days > sett_day:
-                    day = int(day_difference.days)
-                penalization = ((amount * commi) / 30) * day
-                before_penalization = amount * inte
-                commission = before_penalization - penalization
-                SaleCommissionDetail.create({
-                    'account_payment_amount': amount,
-                    'sale_commission_id': self.id,
-                    'account_invoice_id': account_invoice.id,
-                    'account_payment_id': payment.payment_id.id,
-                    'day_difference': day_difference.days,
-                    'day_int': day,
-                    'penalization': penalization,
-                    'commission_brand': inte,
-                    'before_penalization': before_penalization,
-                    'commission': commission
-                    })
+                if payment.payment_id.payment_date:
+                    day_difference = datetime.datetime.strptime(payment.payment_id.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_invoice, "%Y-%m-%d")
+                    day = 0
+                    if day_difference.days > sett_day:
+                        day = int(day_difference.days)
+                    penalization = ((amount * commi) / 30) * day
+                    before_penalization = amount * inte
+                    commission = before_penalization - penalization
+                    SaleCommissionDetail.create({
+                        'account_payment_amount': amount,
+                        'sale_commission_id': self.id,
+                        'account_invoice_id': account_invoice.id,
+                        'account_payment_id': payment.payment_id.id,
+                        'day_difference': day_difference.days,
+                        'day_int': day,
+                        'penalization': penalization,
+                        'commission_brand': inte,
+                        'before_penalization': before_penalization,
+                        'commission': commission
+                        })
 
         return {
                 'type': 'ir.actions.act_window',
