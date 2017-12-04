@@ -46,7 +46,7 @@ class SaleCommission(models.TransientModel):
                                 ('user_id', '=', self.user_id.id),
                                 ('date_invoice', '>=', self.date_start),
                                 ('date_invoice', '<=', self.date_end),
-                                ('payment_ids', '!=', False)])
+                                ('payment_move_line_ids', '!=', False)])
         SaleCommissionDetail.search([]).unlink()
 
         for account_invoice in account_invoices:
