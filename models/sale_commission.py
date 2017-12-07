@@ -42,11 +42,21 @@ class SaleCommission(models.TransientModel):
         if sale_commission_setting:
             commi = sale_commission_setting.commission / 100
             sett_day = sale_commission_setting.day
-        account_invoices = AccountInvoice.search([
-                                ('user_id', '=', self.user_id.id),
-                                #('date_invoice', '>=', self.date_start),
-                                #('date_invoice', '<=', self.date_end),
-                                ('payment_move_line_ids', '!=', False)])
+        domain = []
+        if self.user_id:
+            domain = [
+                        ('user_id', '=', False),
+                        ('payment_move_line_ids', '!=', False)]
+        else:
+            domain = [
+                        ('user_id', '=', self.user_id.id),
+                        ('payment_move_line_ids', '!=', False)]
+        account_invoices = AccountInvoice.search(domain)
+        #account_invoices = AccountInvoice.search([
+                                #('user_id', '=', self.user_id.id),
+                                ##('date_invoice', '>=', self.date_start),
+                                ##('date_invoice', '<=', self.date_end),
+                                #('payment_move_line_ids', '!=', False)])
         SaleCommissionDetail.search([]).unlink()
 
         for account_invoice in account_invoices:
@@ -104,7 +114,7 @@ class SaleCommission(models.TransientModel):
                 'target': 'new',
                 }
 
-    user_id = fields.Many2one('res.users', 'Salesman', required=True)
+    user_id = fields.Many2one('res.users', 'Salesman')
     date_start = fields.Datetime('Start Date',
                                     required=True)
     date_end = fields.Datetime('End Date',
