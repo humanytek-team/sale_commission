@@ -59,9 +59,9 @@ class SaleCommission(models.TransientModel):
                 if sale_commission_brand:
                     inte = sale_commission_brand[0].commission / 100
             #for payment in account_invoice.payment_ids:
-                #amount = 0
+            _logger.info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
             for payment in account_invoice.payment_move_line_ids:
-
+                _logger.info('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB')
 
                 payment_currency_id = False
                 amount = sum([p.amount for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
