@@ -24,9 +24,9 @@
                                     <strong>VENDEDOR</strong>
                                     <span t-field="docs.user_id.name"/><br/>
                                     <strong>MONTO CON IMPUESTO</strong>
-                                    <span t-field="docs.commission_tax"/><br/>
+                                    <span t-field="docs.commission_tax" widget="monetary"/><br/>
                                     <strong>COMISION</strong>
-                                    <span t-field="docs.commission"/>
+                                    <span t-field="docs.commission" widget="monetary"/>
                                 </td>
                                 <td>
                                     <strong>FECHA INICIAL </strong>
