@@ -29,8 +29,8 @@
                             <field name="date_end" />
                         </group>
                     </group>
-                    <field name="sale_commission_detail_ids" mode="tree" limit="10">
-                        <tree string="Detail" >
+                    <field name="sale_commission_detail_ids" mode="tree" >
+                        <tree string="Detail" limit="10">
                             <field name="account_invoice_number" />
                             <field name="partner_id" />
                             <field name="currency_id" invisible="1"/>

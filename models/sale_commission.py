@@ -44,8 +44,8 @@ class SaleCommission(models.TransientModel):
             sett_day = sale_commission_setting.day
         account_invoices = AccountInvoice.search([
                                 ('user_id', '=', self.user_id.id),
-                                ('date_invoice', '>=', self.date_start),
-                                ('date_invoice', '<=', self.date_end),
+                                #('date_invoice', '>=', self.date_start),
+                                #('date_invoice', '<=', self.date_end),
                                 ('payment_move_line_ids', '!=', False)])
         SaleCommissionDetail.search([]).unlink()
 
@@ -62,7 +62,6 @@ class SaleCommission(models.TransientModel):
                 #amount = 0
             for payment in account_invoice.payment_move_line_ids:
 
-
                 payment_currency_id = False
                 amount = sum([p.amount for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
                 amount_currency = sum([p.amount_currency for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
@@ -74,25 +73,26 @@ class SaleCommission(models.TransientModel):
                     amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
                 amount = amount_to_show
                 if payment.payment_id.payment_date:
-                    day_difference = datetime.datetime.strptime(payment.payment_id.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_invoice, "%Y-%m-%d")
-                    day = 0
-                    if day_difference.days > sett_day:
-                        day = int(day_difference.days)
-                    penalization = ((amount * commi) / 30) * day
-                    before_penalization = amount * inte
-                    commission = before_penalization - penalization
-                    SaleCommissionDetail.create({
-                        'account_payment_amount': amount,
-                        'sale_commission_id': self.id,
-                        'account_invoice_id': account_invoice.id,
-                        'account_payment_id': payment.payment_id.id,
-                        'day_difference': day_difference.days,
-                        'day_int': day,
-                        'penalization': penalization,
-                        'commission_brand': inte,
-                        'before_penalization': before_penalization,
-                        'commission': commission
-                        })
+                    if payment.payment_id.payment_date >= self.date_start and payment.payment_id.payment_date <= self.date_end:
+                        day_difference = datetime.datetime.strptime(payment.payment_id.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
+                        day = 0
+                        if day_difference.days > sett_day:
+                            day = int(day_difference.days)
+                        penalization = ((amount * commi) / 30) * day
+                        before_penalization = amount * inte
+                        commission = before_penalization - penalization
+                        SaleCommissionDetail.create({
+                            'account_payment_amount': amount,
+                            'sale_commission_id': self.id,
+                            'account_invoice_id': account_invoice.id,
+                            'account_payment_id': payment.payment_id.id,
+                            'day_difference': day_difference.days,
+                            'day_int': day,
+                            'penalization': penalization,
+                            'commission_brand': inte,
+                            'before_penalization': before_penalization,
+                            'commission': commission
+                            })
 
         return {
                 'type': 'ir.actions.act_window',
@@ -146,7 +146,7 @@ class SaleCommissionDetail(models.TransientModel):
     account_invoice_number = fields.Char(related='account_invoice_id.number',
                             string='Number', readonly=True, store=False)
     account_invoice_date = fields.Date(
-                            related='account_invoice_id.date_invoice',
+                            related='account_invoice_id.date_due',
                             string='Invoice Date', readonly=True, store=False)
     partner_id = fields.Many2one(related='account_invoice_id.partner_id',
                             string='Customer',
