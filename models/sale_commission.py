@@ -82,6 +82,9 @@ class SaleCommission(models.TransientModel):
                 amount = amount_to_show
                 if payment.payment_id.payment_date:
                     if payment.payment_id.payment_date >= self.date_start and payment.payment_id.payment_date <= self.date_end:
+                        _logger.info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                        _logger.info(payment.payment_id.payment_date)
+                        _logger.info(self.date_start)
                         day_difference = datetime.datetime.strptime(payment.payment_id.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
                         day = 0
                         if day_difference.days > sett_day:
@@ -113,9 +116,9 @@ class SaleCommission(models.TransientModel):
                 }
 
     user_id = fields.Many2one('res.users', 'Salesman')
-    date_start = fields.Datetime('Start Date',
+    date_start = fields.Date('Start Date',
                                     required=True)
-    date_end = fields.Datetime('End Date',
+    date_end = fields.Date('End Date',
                                     required=True)
     sale_commission_detail_ids = fields.One2many('sale.commission.detail',
                             'sale_commission_id',
