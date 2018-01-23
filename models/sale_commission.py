@@ -80,7 +80,7 @@ class SaleCommission(models.TransientModel):
                 else:
                     amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
                 amount = amount_to_show
-                if payment.payment_id.payment_date:
+                if payment.payment_id.payment_date and account_invoice.date_due:
                     if payment.payment_id.payment_date >= self.date_start and payment.payment_id.payment_date <= self.date_end:
                         day_difference = datetime.datetime.strptime(payment.payment_id.payment_date, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
                         day = 0
