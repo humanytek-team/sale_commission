@@ -146,7 +146,7 @@ class SaleCommission(models.TransientModel):
                                 ])
         #self.commission = (self.commission_tax -
                             #(self.commission_tax * 0.16))
-        self.commission = self.commission_tax / 0.16
+        self.commission = self.commission_tax / 1.16
 
 
 class SaleCommissionDetail(models.TransientModel):
