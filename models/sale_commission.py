@@ -144,8 +144,9 @@ class SaleCommission(models.TransientModel):
                                 self.sale_commission_detail_ids
                                 #if product_compromise.state == 'assigned'
                                 ])
-        self.commission = (self.commission_tax -
-                            (self.commission_tax * 0.16))
+        #self.commission = (self.commission_tax -
+                            #(self.commission_tax * 0.16))
+        self.commission = self.commission_tax / 0.16
 
 
 class SaleCommissionDetail(models.TransientModel):
