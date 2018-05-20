@@ -348,4 +348,3 @@ msgstr "sale.commission.detail"
 #: model:ir.model,name:sale_commission.model_sale_commission_setting
 msgid "sale.commission.setting"
 msgstr "sale.commission.setting"
-

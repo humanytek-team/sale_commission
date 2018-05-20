@@ -1,109 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+  <data>
 
-        <template id="sale_commission_report2">
-            <t t-call="report.html_container">
-                <t
-                    t-call="sale_commission.sale_commission_report_document"
-                    t-lang="user.partner_id.lang"/>
-            </t>
-        </template>
+    <template id="sale_commission_report2">
+      <t t-call="report.html_container">
+        <t t-call="sale_commission.sale_commission_report_document" t-lang="user.partner_id.lang"/>
+      </t>
+    </template>
 
-        <!-- Translatable template -->
-        <template id="sale_commission_report_document">
-            <t t-set="docs" t-value="docs.with_context({'lang':user.partner_id.lang})" />
-            <t t-call="report.external_layout">
-            <!--<t t-foreach="docs.sorted(key=lambda x: x.type_priority)" t-as="o" >-->
-                <div class="page" style="font-size:16px;">
-                    <table class="table table-condensed">
-                        <tbody>
-                            <tr>
-                                <td width="800">
-                                    <h3><strong>CALCULO DE LA COMISIÓN</strong></h3>
-                                    <strong>VENDEDOR</strong>
-                                    <span t-field="docs.user_id.name"/><br/>
-                                    <strong>MONTO CON IMPUESTO</strong>
-                                    <span t-field="docs.commission_tax" widget="monetary"/><br/>
-                                    <strong>COMISION</strong>
-                                    <span t-field="docs.commission" widget="monetary"/>
-                                </td>
-                                <td>
-                                    <strong>FECHA INICIAL </strong>
-                                    <span t-field="docs.date_start"/><br/>
-                                    <strong>FECHA FINAL </strong>
-                                    <span t-field="docs.date_end"/><br/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <!-- Translatable template -->
+    <template id="sale_commission_report_document">
+      <t t-set="docs" t-value="docs.with_context({'lang':user.partner_id.lang})"/>
+      <t t-call="report.external_layout">
+        <!--<t t-foreach="docs.sorted(key=lambda x: x.type_priority)" t-as="o" >-->
+        <div class="page" style="font-size:16px;">
+          <table class="table table-condensed">
+            <tbody>
+              <tr>
+                <td width="800">
+                  <h3>
+                    <strong>CALCULO DE LA COMISIÓN</strong>
+                  </h3>
+                  <strong>VENDEDOR</strong>
+                  <span t-field="docs.user_id.name"/><br/>
+                  <strong>MONTO CON IMPUESTO</strong>
+                  <span t-field="docs.commission_tax" widget="monetary"/><br/>
+                  <strong>COMISION</strong>
+                  <span t-field="docs.commission" widget="monetary"/>
+                </td>
+                <td>
+                  <strong>FECHA INICIAL
+                  </strong>
+                  <span t-field="docs.date_start"/><br/>
+                  <strong>FECHA FINAL
+                  </strong>
+                  <span t-field="docs.date_end"/><br/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-<br/><br/>
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr>
-                                <th><strong>Número</strong></th>
-                                <th class="text-center"><strong>Cliente</strong></th>
-                                <th class="text-center"><strong>Fecha de Factura</strong></th>
-                                <th class="text-center"><strong>Fecha de Pago</strong></th>
-                                <th class="text-center"><strong>Importe</strong></th>
-                                <th class="text-center" >
-                                    <strong>Días de diferencia</strong>
-                                </th>
-                                <th class="text-center" >
-                                    <strong>Días de Interés</strong>
-                                </th>
-                                <th class="text-center" >
-                                    <strong>Monto de Penalización</strong>
-                                </th>
-                                <th class="text-center"><strong>Comisión Marca</strong></th>
-                                <th class="text-center"><strong>Monto antes Penalización</strong></th>
-                                <th class="text-center"><strong>Comisión</strong></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr t-foreach="docs.sale_commission_detail_ids" t-as="o" >
-                                <td>
-                                    <span t-field="o.account_invoice_number"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.partner_id.name"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.account_invoice_date"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.account_payment_date"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.account_payment_amount"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.day_difference"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.day_int"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.penalization"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.commission_brand"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.before_penalization"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.commission"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+          <br/><br/>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>
+                  <strong>Número</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Cliente</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Fecha de Factura</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Fecha de Pago</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Importe</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Días de diferencia</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Días de Interés</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Monto de Penalización</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Comisión Marca</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Monto antes Penalización</strong>
+                </th>
+                <th class="text-center">
+                  <strong>Comisión</strong>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr t-foreach="docs.sale_commission_detail_ids" t-as="o">
+                <td>
+                  <span t-field="o.account_invoice_number"/>
+                </td>
+                <td>
+                  <span t-field="o.partner_id.name"/>
+                </td>
+                <td>
+                  <span t-field="o.account_invoice_date"/>
+                </td>
+                <td>
+                  <span t-field="o.account_payment_date"/>
+                </td>
+                <td>
+                  <span t-field="o.account_payment_amount"/>
+                </td>
+                <td>
+                  <span t-field="o.day_difference"/>
+                </td>
+                <td>
+                  <span t-field="o.day_int"/>
+                </td>
+                <td>
+                  <span t-field="o.penalization"/>
+                </td>
+                <td>
+                  <span t-field="o.commission_brand"/>
+                </td>
+                <td>
+                  <span t-field="o.before_penalization"/>
+                </td>
+                <td>
+                  <span t-field="o.commission"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-            </t>
-            <!--</t>-->
-        </template>
+      </t>
+      <!--</t>-->
+    </template>
 
-    </data>
+  </data>
 </odoo>

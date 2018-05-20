@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <report
-            id="sale_commission_report"
-            string="Reporte Comisión del Vendedor"
-            model="sale.commission"
-            report_type="qweb-pdf"
-            file="sale_commission.sale_commission_report2"
-            name="sale_commission.sale_commission_report2"
-        />
-    </data>
+  <data>
+    <report id="sale_commission_report" string="Reporte Comisión del Vendedor" model="sale.commission" report_type="qweb-pdf" file="sale_commission.sale_commission_report2" name="sale_commission.sale_commission_report2"/>
+  </data>
 </odoo>

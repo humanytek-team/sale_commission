@@ -45,18 +45,18 @@ class SaleCommission(models.TransientModel):
         domain = []
         if self.user_id:
             domain = [
-                        ('user_id', '=', self.user_id.id),
-                        ('payment_move_line_ids', '!=', False)]
+                ('user_id', '=', self.user_id.id),
+                ('payment_move_line_ids', '!=', False)]
         else:
             domain = [
-                        ('user_id', '=', False),
-                        ('payment_move_line_ids', '!=', False)]
+                ('user_id', '=', False),
+                ('payment_move_line_ids', '!=', False)]
         account_invoices = AccountInvoice.search(domain)
-        #account_invoices = AccountInvoice.search([
-                                #('user_id', '=', self.user_id.id),
-                                ##('date_invoice', '>=', self.date_start),
-                                ##('date_invoice', '<=', self.date_end),
-                                #('payment_move_line_ids', '!=', False)])
+        # account_invoices = AccountInvoice.search([
+        #('user_id', '=', self.user_id.id),
+        ##('date_invoice', '>=', self.date_start),
+        ##('date_invoice', '<=', self.date_end),
+        # ('payment_move_line_ids', '!=', False)])
         SaleCommissionDetail.search([]).unlink()
 
         for account_invoice in account_invoices:
@@ -68,7 +68,7 @@ class SaleCommission(models.TransientModel):
                     limit=1)
                 if sale_commission_brand:
                     inte = sale_commission_brand[0].commission / 100
-            #for payment in account_invoice.payment_ids:
+            # for payment in account_invoice.payment_ids:
             for payment in account_invoice.payment_move_line_ids:
                 payment_currency_id = False
                 amount = sum([p.amount for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
@@ -103,32 +103,32 @@ class SaleCommission(models.TransientModel):
                             'commission_brand': inte,
                             'before_penalization': before_penalization,
                             'commission': commission
-                            })
+                        })
 
         return {
-                'type': 'ir.actions.act_window',
-                'res_model': 'sale.commission',
-                'view_mode': 'form',
-                'view_type': 'form',
-                'res_id': self.id,
-                'views': [(False, 'form')],
-                'target': 'new',
-                }
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.commission',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_id': self.id,
+            'views': [(False, 'form')],
+            'target': 'new',
+        }
 
     user_id = fields.Many2one('res.users', 'Salesman')
     date_start = fields.Date('Start Date',
-                                    required=True)
+                             required=True)
     date_end = fields.Date('End Date',
-                                    required=True)
+                           required=True)
     sale_commission_detail_ids = fields.One2many('sale.commission.detail',
-                            'sale_commission_id',
-                            'Detail')
+                                                 'sale_commission_id',
+                                                 'Detail')
     commission_tax = fields.Float('Commission with tax',
-                                compute='_compute_commission',
-                                readonly=True)
+                                  compute='_compute_commission',
+                                  readonly=True)
     commission = fields.Float('Commission',
-                                compute='_compute_commission',
-                                readonly=True)
+                              compute='_compute_commission',
+                              readonly=True)
 
     @api.multi
     def print_commission(self):
@@ -140,12 +140,12 @@ class SaleCommission(models.TransientModel):
     @api.multi
     def _compute_commission(self):
         self.commission_tax = sum([sale_commission_detail.commission
-                                for sale_commission_detail in
-                                self.sale_commission_detail_ids
-                                #if product_compromise.state == 'assigned'
-                                ])
-        #self.commission = (self.commission_tax -
-                            #(self.commission_tax * 0.16))
+                                   for sale_commission_detail in
+                                   self.sale_commission_detail_ids
+                                   # if product_compromise.state == 'assigned'
+                                   ])
+        # self.commission = (self.commission_tax -
+        # (self.commission_tax * 0.16))
         self.commission = self.commission_tax / 1.16
 
 
@@ -154,25 +154,25 @@ class SaleCommissionDetail(models.TransientModel):
 
     sale_commission_id = fields.Many2one('sale.commission', 'Commission')
     account_invoice_id = fields.Many2one('account.invoice', 'Invoice',
-                                        readonly=True)
+                                         readonly=True)
     account_invoice_number = fields.Char(related='account_invoice_id.number',
-                            string='Number', readonly=True, store=False)
+                                         string='Number', readonly=True, store=False)
     account_invoice_date = fields.Date(
-                            related='account_invoice_id.date_due',
-                            string='Invoice Date', readonly=True, store=False)
+        related='account_invoice_id.date_due',
+        string='Invoice Date', readonly=True, store=False)
     partner_id = fields.Many2one(related='account_invoice_id.partner_id',
-                            string='Customer',
-                            readonly=True, store=False)
+                                 string='Customer',
+                                 readonly=True, store=False)
     currency_id = fields.Many2one(related='account_invoice_id.currency_id',
-                            string='Currency',
-                            readonly=True, store=False)
+                                  string='Currency',
+                                  readonly=True, store=False)
     account_payment_id = fields.Many2one('account.payment', 'Payment',
-                                        readonly=True)
+                                         readonly=True)
     account_payment_date = fields.Date(
-                            related='account_payment_id.payment_date',
-                            string='Payment Date', readonly=True, store=False)
+        related='account_payment_id.payment_date',
+        string='Payment Date', readonly=True, store=False)
     account_payment_amount = fields.Monetary(
-                            string='Amount', readonly=True)
+        string='Amount', readonly=True)
     day_difference = fields.Integer('Difference Days')
     day_int = fields.Integer('Int. Days')
     penalization = fields.Float('Penalization Amount')
