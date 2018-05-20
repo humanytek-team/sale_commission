@@ -29,8 +29,11 @@
     'author': "Humanytek",
     'website': "http://www.humanytek.com",
     'category': 'Ale',
-    'version': '1.0.0',
-    'depends': ['sale'],
+    'version': '1.0.1',
+    'depends': [
+        'sale',
+        'sale_brand',
+    ],
     'data': [
         'view/sale_commission_view.xml',
         'report/sale_commission_report.xml',
