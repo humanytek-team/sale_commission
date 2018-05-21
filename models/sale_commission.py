@@ -94,6 +94,7 @@ class SaleCommission(models.TransientModel):
                         'commission_brand': inte,
                         'before_penalization': before_penalization,
                         'commission': commission,
+                        'brand_id': sale_commission_brand and sale_commission_brand.brand_id.id,
                     })
 
         return {
@@ -170,6 +171,10 @@ class SaleCommissionDetail(models.TransientModel):
     before_penalization = fields.Float('Before Penalization Amount')
     commission = fields.Float('Commission')
     commission_brand = fields.Float('Commission Brand', (2, 4))
+    brand_id = fields.Many2one(
+        comodel_name='product.brand',
+        string='Brand',
+    )
 
 
 class SaleCommissionBrand(models.Model):

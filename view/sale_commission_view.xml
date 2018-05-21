@@ -35,6 +35,7 @@
               <field name="commission_brand" readonly="1"/>
               <field name="before_penalization" readonly="1"/>
               <field name="commission" readonly="1"/>
+              <field name="brand_id" readonly="1"/>
             </tree>
           </field>
           <group>

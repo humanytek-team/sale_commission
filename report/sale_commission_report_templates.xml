@@ -77,6 +77,9 @@
                 <th class="text-center">
                   <strong>Comisión</strong>
                 </th>
+                <th class="text-center">
+                  <strong>Marca</strong>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -113,6 +116,9 @@
                 </td>
                 <td>
                   <span t-field="o.commission"/>
+                </td>
+                <td>
+                  <span t-field="o.brand_id"/>
                 </td>
               </tr>
             </tbody>
