@@ -95,6 +95,7 @@ class SaleCommission(models.TransientModel):
                         'before_penalization': before_penalization,
                         'commission': commission,
                         'brand_id': sale_commission_brand and sale_commission_brand.brand_id.id,
+                        'account_payment_date': payment.payment_id.payment_date or payment.create_date,
                     })
 
         return {
@@ -161,8 +162,9 @@ class SaleCommissionDetail(models.TransientModel):
     account_payment_id = fields.Many2one('account.payment', 'Payment',
                                          readonly=True)
     account_payment_date = fields.Date(
-        related='account_payment_id.payment_date',
-        string='Payment Date', readonly=True, store=False)
+        string='Payment Date',
+        readonly=True,
+    )
     account_payment_amount = fields.Monetary(
         string='Amount', readonly=True)
     day_difference = fields.Integer('Difference Days')
