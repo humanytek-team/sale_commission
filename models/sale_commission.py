@@ -42,15 +42,14 @@ class SaleCommission(models.TransientModel):
         if sale_commission_setting:
             commi = sale_commission_setting.commission / 100
             sett_day = sale_commission_setting.day
-        domain = []
+        domain = [
+            ('payment_move_line_ids', '!=', False),
+            ('amount_total_signed', '>', 0),
+        ]
         if self.user_id:
-            domain = [
-                ('user_id', '=', self.user_id.id),
-                ('payment_move_line_ids', '!=', False)]
+            domain.append(('user_id', '=', self.user_id.id))
         else:
-            domain = [
-                ('user_id', '=', False),
-                ('payment_move_line_ids', '!=', False)]
+            domain.append(('user_id', '=', False))
         account_invoices = AccountInvoice.search(domain)
         SaleCommissionDetail.search([]).unlink()
 
@@ -65,6 +64,8 @@ class SaleCommission(models.TransientModel):
                     inte = sale_commission_brand[0].commission / 100
             # for payment in account_invoice.payment_ids:
             for payment in account_invoice.payment_move_line_ids:
+                if payment.move_id.name[:3] == 'NCC':
+                    continue
                 payment_currency_id = False
                 amount = sum([p.amount for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
                 amount_currency = sum([p.amount_currency for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
