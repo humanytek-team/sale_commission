@@ -76,8 +76,12 @@ class SaleCommission(models.TransientModel):
                 else:
                     amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
                 amount = amount_to_show
-                if payment.create_date >= self.date_start and payment.create_date <= self.date_end and amount:
-                    day_difference = datetime.datetime.strptime(payment.create_date[:10], "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
+                if payment.payment_id:
+                    date = payment.payment_id.payment_date
+                else:
+                    date = payment.move_id.date
+                if date and date >= self.date_start and date <= self.date_end and amount:
+                    day_difference = datetime.datetime.strptime(date[:10], "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
                     day = 0
                     if day_difference.days > sett_day:
                         day = int(day_difference.days)
@@ -96,7 +100,7 @@ class SaleCommission(models.TransientModel):
                         'before_penalization': before_penalization,
                         'commission': commission,
                         'brand_id': sale_commission_brand and sale_commission_brand.brand_id.id,
-                        'account_payment_date': payment.payment_id.payment_date or payment.create_date,
+                        'account_payment_date': date,
                     })
 
         return {
