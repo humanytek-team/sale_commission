@@ -45,6 +45,7 @@ class SaleCommission(models.TransientModel):
         domain = [
             ('payment_move_line_ids', '!=', False),
             ('amount_total_signed', '>', 0),
+            ('type', '=', 'out_invoice'),
         ]
         if self.user_id:
             domain.append(('user_id', '=', self.user_id.id))
@@ -55,7 +56,7 @@ class SaleCommission(models.TransientModel):
 
         for account_invoice in account_invoices:
             inte = 0
-            if account_invoice.invoice_line_ids[0].product_id.product_brand_id:
+            if account_invoice.invoice_linout_invoicee_ids[0].product_id.product_brand_id:
                 sale_commission_brand = SaleCommissionBrand.search([
                     ('user_id', '=', account_invoice.user_id.id),
                     ('brand_id', '=', account_invoice.invoice_line_ids[0].product_id.product_brand_id.id)],
