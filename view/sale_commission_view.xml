@@ -8,6 +8,7 @@
       <form string="Commission">
         <header>
           <button name="calculate" string="Calculate" type="object"/>
+          <button name="calculate_new" string="Calculate new field" type="object"/>
           <button name="print_commission" string="Print" type="object"/>
         </header>
         <sheet>

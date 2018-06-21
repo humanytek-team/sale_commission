@@ -30,7 +30,7 @@ class SaleCommission(models.TransientModel):
     _name = "sale.commission"
 
     @api.multi
-    def calculate(self):
+    def calculate(self, new=False):
         AccountInvoice = self.env['account.invoice']
         SaleCommissionDetail = self.env['sale.commission.detail']
         SaleCommissionBrand = self.env['sale.commission.brand']
@@ -77,10 +77,15 @@ class SaleCommission(models.TransientModel):
                 else:
                     amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
                 amount = amount_to_show
-                if payment.payment_id:
-                    date = payment.payment_id.payment_date
+                date = False
+                if new:
+                    if payment.payment_id:
+                        date = payment.payment_id.association_date
                 else:
-                    date = payment.move_id.date
+                    if payment.payment_id:
+                        date = payment.payment_id.payment_date
+                    else:
+                        date = payment.move_id.date
                 if date and date >= self.date_start and date <= self.date_end and amount:
                     day_difference = datetime.datetime.strptime(date[:10], "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
                     day = 0
@@ -113,6 +118,10 @@ class SaleCommission(models.TransientModel):
             'views': [(False, 'form')],
             'target': 'new',
         }
+
+    @api.multi
+    def calculate_new(self):
+        return self.calculate(new=True)
 
     user_id = fields.Many2one('res.users', 'Salesman')
     date_start = fields.Date('Start Date',
