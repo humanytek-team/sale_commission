@@ -30,7 +30,7 @@ class SaleCommission(models.TransientModel):
     _name = "sale.commission"
 
     @api.multi
-    def calculate(self, new=False):
+    def calculate(self):
         AccountInvoice = self.env['account.invoice']
         SaleCommissionDetail = self.env['sale.commission.detail']
         SaleCommissionBrand = self.env['sale.commission.brand']
@@ -78,15 +78,11 @@ class SaleCommission(models.TransientModel):
                     amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
                 amount = amount_to_show
                 date = False
-                if new:
-                    if payment.payment_id:
-                        date = payment.payment_id.association_date
+                if payment.payment_id:
+                    date = payment.payment_id.payment_date
                 else:
-                    if payment.payment_id:
-                        date = payment.payment_id.payment_date
-                    else:
-                        date = payment.move_id.date
-                if date and date >= self.date_start and date <= self.date_end and amount:
+                    date = payment.move_id.date
+                if date and account_invoice.date_due and date >= self.date_start and date <= self.date_end and amount:
                     day_difference = datetime.datetime.strptime(date[:10], "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
                     day = 0
                     if day_difference.days > sett_day:
@@ -121,7 +117,87 @@ class SaleCommission(models.TransientModel):
 
     @api.multi
     def calculate_new(self):
-        return self.calculate(new=True)
+        AccountInvoice = self.env['account.invoice']
+        SaleCommissionDetail = self.env['sale.commission.detail']
+        SaleCommissionBrand = self.env['sale.commission.brand']
+        SaleCommissionSetting = self.env['sale.commission.setting']
+
+        sale_commission_setting = SaleCommissionSetting.search([], limit=1)
+        commi = 0
+        sett_day = 0
+        if sale_commission_setting:
+            commi = sale_commission_setting.commission / 100
+            sett_day = sale_commission_setting.day
+        domain = [
+            ('payment_move_line_ids', '!=', False),
+            ('amount_total_signed', '>', 0),
+            ('type', '=', 'out_invoice'),
+        ]
+        if self.user_id:
+            domain.append(('user_id', '=', self.user_id.id))
+        else:
+            domain.append(('user_id', '=', False))
+        account_invoices = AccountInvoice.search(domain)
+        SaleCommissionDetail.search([]).unlink()
+
+        for account_invoice in account_invoices:
+            inte = 0
+            if account_invoice.invoice_line_ids[0].product_id.product_brand_id:
+                sale_commission_brand = SaleCommissionBrand.search([
+                    ('user_id', '=', account_invoice.user_id.id),
+                    ('brand_id', '=', account_invoice.invoice_line_ids[0].product_id.product_brand_id.id)],
+                    limit=1)
+                if sale_commission_brand:
+                    inte = sale_commission_brand[0].commission / 100
+            # for payment in account_invoice.payment_ids:
+            for payment in account_invoice.payment_move_line_ids:
+                if payment.move_id.name[:3] == 'NCC':
+                    continue
+                payment_currency_id = False
+                amount = sum([p.amount for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
+                amount_currency = sum([p.amount_currency for p in payment.matched_debit_ids if p.debit_move_id in account_invoice.move_id.line_ids])
+                if payment.matched_debit_ids:
+                    payment_currency_id = all([p.currency_id == payment.matched_debit_ids[0].currency_id for p in payment.matched_debit_ids]) and payment.matched_debit_ids[0].currency_id or False
+                if payment_currency_id and payment_currency_id == account_invoice.currency_id:
+                    amount_to_show = amount_currency
+                else:
+                    amount_to_show = payment.company_id.currency_id.with_context(date=payment.date).compute(amount, account_invoice.currency_id)
+                amount = amount_to_show
+                date = False
+                if payment.payment_id:
+                    date = payment.payment_id.association_date
+                if date and account_invoice.date_due and date >= self.date_start and date <= self.date_end and amount:
+                    day_difference = datetime.datetime.strptime(date[:10], "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
+                    day = 0
+                    if day_difference.days > sett_day:
+                        day = int(day_difference.days)
+                    penalization = ((amount * commi) / 30) * day
+                    before_penalization = amount * inte
+                    commission = before_penalization - penalization
+                    SaleCommissionDetail.create({
+                        'account_payment_amount': amount,
+                        'sale_commission_id': self.id,
+                        'account_invoice_id': account_invoice.id,
+                        'account_payment_id': payment.payment_id.id,
+                        'day_difference': day_difference.days,
+                        'day_int': day,
+                        'penalization': penalization,
+                        'commission_brand': inte,
+                        'before_penalization': before_penalization,
+                        'commission': commission,
+                        'brand_id': sale_commission_brand and sale_commission_brand.brand_id.id,
+                        'account_payment_date': date,
+                    })
+
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.commission',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_id': self.id,
+            'views': [(False, 'form')],
+            'target': 'new',
+        }
 
     user_id = fields.Many2one('res.users', 'Salesman')
     date_start = fields.Date('Start Date',
