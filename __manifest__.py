@@ -29,14 +29,14 @@
     'author': "Humanytek",
     'website': "http://www.humanytek.com",
     'category': 'Ale',
-    'version': '1.6.0',
+    'version': '1.6.1',
     'depends': [
         'account',
         'sale',
         'sale_brand',
     ],
     'data': [
-        'data/sale_commission_report_data.xml',
+        # 'data/sale_commission_report_data.xml',
         'report/sale_commission_report_templates.xml',
         'report/sale_commission_report.xml',
         'view/sale_commission_view.xml',
