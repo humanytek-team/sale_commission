@@ -165,7 +165,10 @@ class SaleCommission(models.TransientModel):
                 amount = amount_to_show
                 date = False
                 if payment.payment_id:
-                    date = payment.payment_id.association_date
+                    for association in payment.payment_id.association_ids:
+                        if association.invoice_id == account_invoice:
+                            date = association.date
+                            break
                 if date and account_invoice.date_due and date >= self.date_start and date <= self.date_end and amount:
                     day_difference = datetime.datetime.strptime(date[:10], "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
                     day = 0

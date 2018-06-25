@@ -29,7 +29,7 @@
     'author': "Humanytek",
     'website': "http://www.humanytek.com",
     'category': 'Ale',
-    'version': '1.5.1',
+    'version': '1.6.0',
     'depends': [
         'account',
         'sale',
@@ -39,7 +39,6 @@
         'data/sale_commission_report_data.xml',
         'report/sale_commission_report_templates.xml',
         'report/sale_commission_report.xml',
-        'view/account_payment.xml',
         'view/sale_commission_view.xml',
     ],
     'demo': [
