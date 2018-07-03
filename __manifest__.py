@@ -29,7 +29,7 @@
     'author': "Humanytek",
     'website': "http://www.humanytek.com",
     'category': 'Ale',
-    'version': '1.6.1',
+    'version': '1.7.0',
     'depends': [
         'account',
         'sale',
