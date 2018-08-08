@@ -149,7 +149,6 @@ class SaleCommission(models.TransientModel):
                     limit=1)
                 if sale_commission_brand:
                     inte = sale_commission_brand[0].commission / 100
-            # for payment in account_invoice.payment_ids:
             for payment in account_invoice.payment_move_line_ids:
                 if payment.move_id.name[:3] == 'NCC':
                     continue
@@ -171,11 +170,13 @@ class SaleCommission(models.TransientModel):
                             break
                 if date and account_invoice.date_due and date >= self.date_start and date <= self.date_end and amount:
                     date_penalization = payment.date
-                    if account_invoice.move_id:
-                        for line in account_invoice.move_id.line_ids:
-                            if line.move_id == account_invoice.move_id:
-                                date_penalization = line.date
-                                break
+                    lines = []
+                    for line in payment.move_id.line_ids:
+                        lines.extend([r.debit_move_id for r in line.matched_debit_ids] if line.credit > 0 else [r.credit_move_id for r in line.matched_credit_ids])
+                    for line in lines:
+                        if line.name == 'Pago de cliente':
+                            date_penalization = line.date
+                            break
                     day_difference = datetime.datetime.strptime(date_penalization, "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
                     day = 0
                     if day_difference.days > sett_day:
