@@ -13,11 +13,12 @@ class AccountPayment(models.Model):
     def post(self):
         super(AccountPayment, self).post()
         try:
-            invoice_id = self.env['account.invoice'].browse(self._context.get('active_id'))
-            self.env['account.association'].create({
-                'invoice_id': invoice_id.id,
-                'payment_id': self.id,
-                'date': fields.Date.today(),
-            })
+            invoice_ids = self.env['account.invoice'].browse(self._context.get('active_ids'))
+            for invoice in invoice_ids:
+                self.env['account.association'].create({
+                    'invoice_id': invoice.id,
+                    'payment_id': self.id,
+                    'date': fields.Date.today(),
+                })
         except Exception as e:
             pass
