@@ -36,6 +36,7 @@
         'sale_brand',
     ],
     'data': [
+        'security/ir.model.access.csv',
         # 'data/sale_commission_report_data.xml',
         'report/sale_commission_report_templates.xml',
         'report/sale_commission_report.xml',

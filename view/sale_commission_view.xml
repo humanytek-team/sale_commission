@@ -56,7 +56,7 @@
     <field name="target">new</field>
   </record>
 
-  <menuitem id="menu_sale_commission" name="Commission Calculation" parent="sales_team.menu_sales" action="action_sale_commission"/>
+  <menuitem id="menu_sale_commission" name="Commission Calculation" parent="sale.menu_sale_report" action="action_sale_commission"/>
 
   <record id="sale_commission_detail_view" model="ir.ui.view">
     <field name="name">sale.commission.detail.view</field>
