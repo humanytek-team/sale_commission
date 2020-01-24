@@ -23,4 +23,4 @@
 from . import account_association
 from . import account_payment
 from . import account_invoice
-import sale_commission
+from . import sale_commission
