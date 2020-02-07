@@ -83,7 +83,7 @@ class SaleCommission(models.TransientModel):
                 else:
                     date = payment.move_id.date
                 if date and account_invoice.date_due and date >= self.date_start and date <= self.date_end and amount:
-                    day_difference = datetime.datetime.strptime(date[:10], "%Y-%m-%d") - datetime.datetime.strptime(account_invoice.date_due, "%Y-%m-%d")
+                    day_difference = date[:10] - account_invoice.date_due
                     day = 0
                     if day_difference.days > sett_day:
                         day = int(day_difference.days)
