@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e-20170815\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-22 09:07+0000\n"
-"PO-Revision-Date: 2017-11-22 09:07+0000\n"
+"POT-Creation-Date: 2018-10-03 23:05+0000\n"
+"PO-Revision-Date: 2018-10-03 23:05+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,94 +17,88 @@ msgstr ""
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<br/>\n"
-"                                    <strong>COMISION</strong>"
-msgstr "<br/>\n"
-"                                    <strong>COMISION</strong>"
+msgid "<span>Amount before penalty</span>"
+msgstr "<span>Monto antes de penalización</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<br/>\n"
-"                                    <strong>FECHA FINAL </strong>"
-msgstr "<br/>\n"
-"                                    <strong>FECHA FINAL </strong>"
+msgid "<span>Amount</span>"
+msgstr "<span>Importe</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<br/>\n"
-"                                    <strong>MONTO CON IMPUESTO</strong>"
-msgstr "<br/>\n"
-"                                    <strong>MONTO CON IMPUESTO</strong>"
+msgid "<span>Brand commission</span>"
+msgstr "<span>Comisión marca</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>CALCULO DE LA COMISIÓN</strong>"
-msgstr "<strong>CALCULO DE LA COMISIÓN</strong>"
+msgid "<span>Brand</span>"
+msgstr "<span>Marca</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Cliente</strong>"
-msgstr "<strong>Cliente</strong>"
+msgid "<span>Commission</span>"
+msgstr "<span>Comisión</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Comisión Marca</strong>"
-msgstr "<strong>Comisión Marca</strong>"
+msgid "<span>Customer</span>"
+msgstr "<span>Cliente</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Comisión</strong>"
-msgstr "<strong>Comisión</strong>"
+msgid "<span>Days of difference</span>"
+msgstr "<span>Días de diferencia</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Días de Interés</strong>"
-msgstr "<strong>Días de Interés</strong>"
+msgid "<span>Days of interest</span>"
+msgstr "<span>Días de interés</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Días de diferencia</strong>"
-msgstr "<strong>Días de diferencia</strong>"
+msgid "<span>Invoice date</span>"
+msgstr "<span>Fecha de factura</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>FECHA INICIAL </strong>"
-msgstr "<strong>FECHA INICIAL </strong>"
+msgid "<span>Number</span>"
+msgstr "<span>Número</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Fecha de Factura</strong>"
-msgstr "<strong>Fecha de Factura</strong>"
+msgid "<span>Payment date</span>"
+msgstr "<span>Fecha de pago</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Fecha de Pago</strong>"
-msgstr "<strong>Fecha de Pago</strong>"
+msgid "<span>Penalty amount</span>"
+msgstr "<span>Monto de penalización</span>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Importe</strong>"
-msgstr "<strong>Importe</strong>"
+msgid "<strong>COMMISSION WITH TAX: </strong>"
+msgstr "<strong>COMISIÓN CON IMPUESTO: </strong>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Monto antes Penalización</strong>"
-msgstr "<strong>Monto antes Penalización</strong>"
+msgid "<strong>COMMISSION: </strong>"
+msgstr "<strong>COMISIÓN: </strong>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Monto de Penalización</strong>"
-msgstr "<strong>Monto de Penalización</strong>"
+msgid "<strong>FINAL DATE: </strong>"
+msgstr "<strong>FECHA FINAL: </strong>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>Número</strong>"
-msgstr "<strong>Número</strong>"
+msgid "<strong>INITIAL DATE: </strong>"
+msgstr "<strong>FECHA INICIAL: </strong>"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
-msgid "<strong>VENDEDOR</strong>"
-msgstr "<strong>VENDEDOR</strong>"
+msgid "<strong>SELLER: </strong>"
+msgstr "<strong>VENDEDOR: </strong>"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_account_payment_amount
@@ -113,32 +107,61 @@ msgstr "Importe"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_before_penalization
-msgid "Before Penalization Amount"
-msgstr "Monto Antes de la Penalización"
+msgid "Amount before penalty"
+msgstr "Monto antes de penalización"
+
+#. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_invoice_association_ids
+#: model:ir.model.fields,field_description:sale_commission.field_account_payment_association_ids
+msgid "Associations"
+msgstr "Asociaciones"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_brand_id
+#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_brand_id
+#: model:ir.model.fields,help:sale_commission.field_sale_commission_brand_brand_id
 msgid "Brand"
 msgstr "Marca"
 
 #. module: sale_commission
-#: model:ir.ui.view,arch_db:sale_commission.sale_commission_view
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_report_document
+msgid "COMMISSION CALCULATION"
+msgstr "CÁLCULO DE LA COMISIÓN"
+
+#. module: sale_commission
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_form
 msgid "Calculate"
 msgstr "Calcular"
+
+#. module: sale_commission
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: sale_commission
+#: model:ir.actions.act_window,help:sale_commission.sale_commission_settings_action
+msgid "Click to set a new Commission Settings."
+msgstr "Haga clic para establecer una nueva configuración de la Comisión."
+
+#. module: sale_commission
+#: model:ir.actions.act_window,help:sale_commission.sale_commission_brand_action
+msgid "Click to set a new Seller Commission."
+msgstr "Haga clic para establecer una nueva comisión de vendedor."
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_sale_commission_id
-#: model:ir.ui.view,arch_db:sale_commission.sale_commission_brand_view
-#: model:ir.ui.view,arch_db:sale_commission.sale_commission_view
-#: model:ir.ui.view,arch_db:sale_commission.view_sale_commission_brand_tree
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_brand_form
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_brand_tree
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_form
 msgid "Commission"
 msgstr "Comisión"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_setting_commission
+#: model:ir.model.fields,help:sale_commission.field_sale_commission_brand_commission
 msgid "Commission (%)"
 msgstr "Comisión (%)"
 
@@ -148,7 +171,7 @@ msgid "Commission Brand"
 msgstr "Comisión Marca"
 
 #. module: sale_commission
-#: model:ir.actions.act_window,name:sale_commission.action_sale_commission
+#: model:ir.actions.act_window,name:sale_commission.sale_commission_action
 #: model:ir.ui.menu,name:sale_commission.menu_sale_commission
 msgid "Commission Calculation"
 msgstr "Cálculo de la Comisión"
@@ -156,25 +179,25 @@ msgstr "Cálculo de la Comisión"
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_detail_view
 msgid "Commission Detail"
-msgstr "Detalle Comisión"
+msgstr "Detalles de Comisión"
 
 #. module: sale_commission
-#: model:ir.actions.act_window,name:sale_commission.action_sale_commission_brand
-#: model:ir.ui.menu,name:sale_commission.menu_sale_commission_brand
-msgid "Commission Salesman"
-msgstr "Comisión Vendedor"
-
-#. module: sale_commission
-#: model:ir.actions.act_window,name:sale_commission.action_sale_commission_setting
-#: model:ir.ui.view,arch_db:sale_commission.sale_commission_setting_view
-#: model:ir.ui.view,arch_db:sale_commission.view_sale_commission_setting_tree
-msgid "Commission Setting"
+#: model:ir.actions.act_window,name:sale_commission.sale_commission_settings_action
+#: model:ir.ui.menu,name:sale_commission.menu_sale_commission_settings
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_settings_form
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_settings_tree
+msgid "Commission Settings"
 msgstr "Configuración de la Comisión"
 
 #. module: sale_commission
-#: model:ir.ui.menu,name:sale_commission.menu_sale_commission_setting
-msgid "Commission setting"
-msgstr "Configuración de la Comisión"
+#: model:ir.model.fields,help:sale_commission.field_sale_commission_setting_day
+msgid "Commission days"
+msgstr "Días de la comisión."
+
+#. module: sale_commission
+#: model:ir.model.fields,help:sale_commission.field_sale_commission_setting_commission
+msgid "Commission value (%)"
+msgstr "Valor de comisión (%)"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_commission_tax
@@ -182,6 +205,7 @@ msgid "Commission with tax"
 msgstr "Comisión con impuesto"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_create_uid
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_create_uid
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_create_uid
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_create_uid
@@ -190,6 +214,7 @@ msgid "Created by"
 msgstr "Creado por"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_create_date
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_create_date
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_create_date
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_create_date
@@ -208,35 +233,46 @@ msgid "Customer"
 msgstr "Cliente"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_setting_day
 msgid "Days"
 msgstr "Días"
 
 #. module: sale_commission
-#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_sale_commission_detail_ids
-#: model:ir.ui.view,arch_db:sale_commission.sale_commission_view
-msgid "Detail"
-msgstr "Detalle"
-
-#. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_day_difference
-msgid "Difference Days"
+msgid "Days of difference"
 msgstr "Días de diferencia"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_day_int
+msgid "Days of interest"
+msgstr "Días de interés"
+
+#. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_sale_commission_detail_ids
+msgid "Details"
+msgstr "Detalles"
+
+#. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_display_name
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_display_name
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_display_name
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_display_name
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_setting_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre a Mostrar"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_date_end
 msgid "End Date"
-msgstr "Fecha finalización"
+msgstr "Fecha final"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_id
@@ -245,48 +281,49 @@ msgid "ID"
 msgstr "ID"
 
 #. module: sale_commission
-#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_day_int
-msgid "Int. Days"
-msgstr "Días de Interés"
+#: model:ir.model.fields,help:sale_commission.field_sale_commission_detail_account_invoice_date
+msgid "If you use payment terms, the due date will be computed automatically at the generation of accounting entries. The Payment terms may compute several due dates, for example 50% now and 50% in one month, but if you want to force a due date, make sure that the payment term is not set on the invoice. If you keep the Payment terms and the due date empty, it means direct payment."
+msgstr "Si usa plazos de pago, la fecha de vencimiento se calculará automáticamente con la generación de los asientos contables. El plazo de pago puede calcular varias fechas de vencimiento, por ejemplo 50% ahora y 50% en un mes, pero si quiere forzar una fecha de vencimiento, asegúrese que el plazo de pago no se establece en la factura. Si deja vacío el plazo de pago y la fecha de vencimiento, significa pago directo."
 
 #. module: sale_commission
+#: model:ir.model,name:sale_commission.model_account_invoice
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_invoice_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_account_invoice_id
+#: model:ir.model.fields,help:sale_commission.field_account_association_invoice_id
 msgid "Invoice"
 msgstr "Factura"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_account_invoice_date
-msgid "Invoice Date"
-msgstr "Fecha factura"
+msgid "Invoice date"
+msgstr "Fecha de factura"
 
 #. module: sale_commission
-#: model:ir.model.fields,help:sale_commission.field_sale_commission_detail_account_invoice_date
-msgid "Keep empty to use the current date"
-msgstr "Dejarlo vacío para utilizar la fecha actual."
-
-#. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association___last_update
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission___last_update
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand___last_update
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail___last_update
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_setting___last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Última Modificación en"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_write_uid
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_write_uid
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_write_uid
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_setting_write_uid
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización por"
+msgstr "Última Actualización por"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_write_date
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_write_date
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_write_date
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_setting_write_date
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr "Última actualización en"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_account_invoice_number
@@ -294,40 +331,59 @@ msgid "Number"
 msgstr "Número"
 
 #. module: sale_commission
+#: model:ir.model.fields,field_description:sale_commission.field_account_association_payment_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_account_payment_id
+#: model:ir.model.fields,help:sale_commission.field_account_association_payment_id
 msgid "Payment"
 msgstr "Pago"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_account_payment_date
-msgid "Payment Date"
+msgid "Payment date"
 msgstr "Fecha de pago"
 
 #. module: sale_commission
-#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_penalization
-msgid "Penalization Amount"
-msgstr "Monto de Penalización"
+#: model:ir.model,name:sale_commission.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
 
 #. module: sale_commission
-#: model:ir.ui.view,arch_db:sale_commission.sale_commission_view
+#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_detail_penalization
+msgid "Penalty amount"
+msgstr "Monto de penalización"
+
+#. module: sale_commission
+#: model:ir.ui.view,arch_db:sale_commission.sale_commission_form
 msgid "Print"
 msgstr "Imprimir"
 
 #. module: sale_commission
-#: model:ir.actions.report.xml,name:sale_commission.sale_commission_report
-msgid "Reporte Comisión del Vendedor"
-msgstr "Reporte Comisión del Vendedor"
-
-#. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_brand_user_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_user_id
+#: model:ir.model.fields,help:sale_commission.field_sale_commission_brand_user_id
 msgid "Salesman"
 msgstr "Vendedor"
+
+#. module: sale_commission
+#: model:ir.actions.act_window,name:sale_commission.sale_commission_brand_action
+#: model:ir.ui.menu,name:sale_commission.menu_sale_commission_brand
+msgid "Seller Commission"
+msgstr "Comisión de Vendedor"
+
+#. module: sale_commission
+#: model:ir.actions.report,name:sale_commission.print_sale_commission
+msgid "Seller Commission Report"
+msgstr "Reporte de Comisión de Vendedor"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_date_start
 msgid "Start Date"
 msgstr "Fecha de inicio"
+
+#. module: sale_commission
+#: model:ir.model,name:sale_commission.model_account_association
+msgid "account.association"
+msgstr "account.association"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission
@@ -348,3 +404,8 @@ msgstr "sale.commission.detail"
 #: model:ir.model,name:sale_commission.model_sale_commission_setting
 msgid "sale.commission.setting"
 msgstr "sale.commission.setting"
+
+#. module: sale_commission
+#: model:ir.model,name:sale_commission.model_sale_commission_settings
+msgid "sale.commission.settings"
+msgstr "sale.commission.settings"

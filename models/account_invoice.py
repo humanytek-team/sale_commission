@@ -1,22 +1,27 @@
-from odoo import api, fields,  models
+# Copyright 2018 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+from odoo import api, fields, models
 
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    association_ids = fields.One2many(
-        comodel_name='account.association',
-        inverse_name='invoice_id',
-    )
+    association_ids = fields.One2many('account.association', 'invoice_id',
+                                      string="Associations")
 
     @api.multi
     def assign_outstanding_credit(self, credit_aml_id):
-        r = super(AccountInvoice, self).assign_outstanding_credit(credit_aml_id)
-        credit_aml = self.env['account.move.line'].browse(credit_aml_id)
-        if credit_aml.payment_id:
-            self.env['account.association'].create({
-                'invoice_id': self.id,
-                'payment_id': credit_aml.payment_id.id,
-                'date': fields.Date.today(),
-            })
-        return r
+        res = super(AccountInvoice, self).assign_outstanding_credit(
+            credit_aml_id)
+        association_ids = self.association_ids.filtered(
+            lambda a: a.move_line_id.id == credit_aml_id)
+        vals = {
+            'invoice_id': self.id,
+            'move_line_id': credit_aml_id,
+            'date': fields.Date.today()}
+        if association_ids:
+            association_ids.update(date=fields.Date.today())
+        else:
+            self.env['account.association'].create(vals)
+        return res
