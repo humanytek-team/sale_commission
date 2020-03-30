@@ -65,7 +65,7 @@ class SaleCommission(models.TransientModel):
             # and is after the grace days configured in
             # `sale.commission.setting` then a penalization must be made to
             # the amount of the commission. Next, the calculation
-            days_of_difference = (fnc(payment_date) - fnc(date_due)).days
+            days_of_difference = (payment_date - date_due).days
             days_of_interest = days_of_difference if \
                 days_of_difference > settings_day else 0
 
